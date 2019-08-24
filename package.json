@@ -1,0 +1,71 @@
+{
+  "name": "prismy-method-router",
+  "version": "1.0.0",
+  "description": ":vertical-traffic-light: Method router for Primsy",
+  "keywords": [
+    "prismy",
+    "method",
+    "router"
+  ],
+  "author": "Junyoung Choi <rokt33r.choi@gmail.com>",
+  "homepage": "https://github.com/prismyland/prismy-method-router",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prismyland/prismy-method-router.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc -P tsconfig.build.json",
+    "lint": "prettier --check src/**/*.ts specs/**/*.ts",
+    "format": "prettier --write src/**/*.ts specs/**/*.ts",
+    "test": "npm run lint && npm run test-type && npm run test-coverage",
+    "test-type": "tsc --noEmit",
+    "test-api": "ava --verbose",
+    "test-coverage": "nyc ava && nyc report --reporter=text-lcov > coverage.lcov",
+    "codecov": "codecov",
+    "prepublishOnly": "npm run lint && npm test && npm run build"
+  },
+  "bugs": {
+    "url": "https://github.com/prismyland/prismy-method-router/issues"
+  },
+  "devDependencies": {
+    "@types/got": "^9.4.4",
+    "@types/node": "^12.0.2",
+    "ava": "^2.2.0",
+    "codecov": "^3.5.0",
+    "got": "^9.6.0",
+    "nyc": "^14.1.1",
+    "prettier": "^1.17.1",
+    "prismy": "^1.3.0",
+    "prismy-test": "^1.0.0",
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.2.0",
+    "typescript": "^3.4.5"
+  },
+  "peerDependencies": {
+    "prismy": ">= 1.3 < 2"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "files": [
+      "specs/**/*.spec.ts"
+    ],
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ]
+  },
+  "dependencies": {}
+}
