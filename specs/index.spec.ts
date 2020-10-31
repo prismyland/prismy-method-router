@@ -13,16 +13,22 @@ test('methodRouter routes', async t => {
   })
 
   await testHandler(handler, async url => {
-    const getResponse = await got.get(url)
+    const getResponse = await got(url)
     t.is(getResponse.body, 'GET')
 
-    const postResponse = await got.post(url)
+    const postResponse = await got(url, {
+      method: 'POST'
+    })
     t.is(postResponse.body, 'POST')
 
-    const patchResponse = await got.patch(url)
+    const patchResponse = await got(url, {
+      method: 'PATCH'
+    })
     t.is(patchResponse.body, 'PATCH')
 
-    const deleteResponse = await got.delete(url)
+    const deleteResponse = await got(url, {
+      method: 'DELETE'
+    })
     t.is(deleteResponse.body, 'DELETE')
   })
 })
@@ -34,8 +40,9 @@ test('methodRouter handles unintended method', async t => {
   })
 
   await testHandler(handler, async url => {
-    const postResponse = await got.post(url, {
-      throwHttpErrors: false
+    const postResponse = await got(url, {
+      throwHttpErrors: false,
+      method: 'POST'
     })
     t.is(postResponse.body, 'Method Not Allowed')
     t.is(postResponse.headers['access-control-request-method'], 'GET')
@@ -75,8 +82,9 @@ test('methodRouter uses custom error handler when method is not available', asyn
   )
 
   await testHandler(handler, async url => {
-    const postResponse = await got.post(url, {
-      throwHttpErrors: false
+    const postResponse = await got(url, {
+      throwHttpErrors: false,
+      method: 'POST'
     })
     t.is(postResponse.body, 'POST method is not allowed')
     t.is(postResponse.statusCode, 405)
@@ -98,7 +106,7 @@ test('methodRouter applies middleware', async t => {
   )
 
   await testHandler(handler, async url => {
-    const getResponse = await got.get(url)
+    const getResponse = await got(url)
     t.is(getResponse.body, 'GET')
     t.is(getResponse.headers['x-test'], 'Hello, World!')
   })
