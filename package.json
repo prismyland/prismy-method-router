@@ -50,7 +50,6 @@
     "prismy": ">= 2 < 3"
   },
   "ava": {
-    "compileEnhancements": false,
     "files": [
       "specs/**/*.spec.ts"
     ],
